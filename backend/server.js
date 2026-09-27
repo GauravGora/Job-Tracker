@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 require("dotenv").config();
@@ -10,10 +11,21 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/auth", authRoutes);
-app.use("/api/jobs", jobRoutes);
-// Connect to MongoDB
+
+// Ensure MongoDB is connected
 connectDB();
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState < 1) {
+    await connectDB();
+  }
+  next();
+});
+
+// Support both /api/... (direct/local) and stripped /... (Vercel service proxy)
+app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/jobs", jobRoutes);
 
 app.get("/", (req, res) => {
   res.json({
