@@ -9,6 +9,7 @@ export function Navbar({
   onOpenAddJob,
   activeTab,
   onNavigate,
+  onLogout,
 }) {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -26,7 +27,11 @@ export function Navbar({
 
   const handleLogout = () => {
     authService.logout();
-    window.location.reload();
+    if (onLogout) {
+      onLogout();
+    } else {
+      window.location.reload();
+    }
   };
 
   const getPageTitle = () => {

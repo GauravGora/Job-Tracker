@@ -8,7 +8,7 @@ import { JobForm } from "./components/jobs/JobForm";
 import { useJobs } from "./hooks/useJobs";
 import { useToast } from "./context/ToastContext";
 
-export function Dashboard() {
+export function Dashboard({ onLogout }) {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,6 +75,7 @@ export function Dashboard() {
       onNavigate={(tab) => setActiveTab(tab)}
       totalJobs={jobs.length}
       onOpenAddJob={() => setIsAddModalOpen(true)}
+      onLogout={onLogout}
     >
       {activeTab === "dashboard" && (
         <DashboardPage

@@ -16,12 +16,17 @@ export function Sidebar({
   activeTab,
   onNavigate,
   totalJobs = 0,
+  onLogout,
 }) {
   const user = authService.getUser() || { name: "Job Seeker", email: "user@example.com" };
 
   const handleLogout = () => {
     authService.logout();
-    window.location.reload();
+    if (onLogout) {
+      onLogout();
+    } else {
+      window.location.reload();
+    }
   };
 
   const navLinks = [

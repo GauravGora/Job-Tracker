@@ -8,6 +8,7 @@ export function PageContainer({
   onNavigate,
   totalJobs = 0,
   onOpenAddJob,
+  onLogout,
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -20,6 +21,7 @@ export function PageContainer({
         activeTab={activeTab}
         onNavigate={onNavigate}
         totalJobs={totalJobs}
+        onLogout={onLogout}
       />
 
       {/* Main app viewport */}
@@ -29,6 +31,7 @@ export function PageContainer({
           onOpenAddJob={onOpenAddJob}
           activeTab={activeTab}
           onNavigate={onNavigate}
+          onLogout={onLogout}
         />
 
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto animate-fade-in">

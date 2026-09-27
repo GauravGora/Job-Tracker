@@ -3,6 +3,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
 import { ToastProvider } from "./components/ui/Toast";
+import { authService } from "./services/authService";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -11,10 +12,16 @@ function App() {
 
   const [showLogin, setShowLogin] = useState(true);
 
+  const handleLogout = () => {
+    authService.logout();
+    setIsLoggedIn(false);
+    setShowLogin(true);
+  };
+
   return (
     <ToastProvider>
       {isLoggedIn ? (
-        <Dashboard />
+        <Dashboard onLogout={handleLogout} />
       ) : showLogin ? (
         <Login
           onLogin={() => setIsLoggedIn(true)}
